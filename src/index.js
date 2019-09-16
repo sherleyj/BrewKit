@@ -59,7 +59,7 @@ class Abv extends React.Component {
             <div className="flexItemInner">
             <h2>ABV Calculator</h2>
             <form onSubmit={this.handleSubmit}>
-                <label>Equation:</label>
+                <div className="inputLabel">Equation:</div>
                 <br></br>
                 <input 
                     type="radio" 
@@ -77,7 +77,7 @@ class Abv extends React.Component {
                     onChange={this.handleChange}
                 /> <span>Alternate (for high ABV)</span>
                 <br></br><br></br>
-                <label>OG:</label>
+                <div className="inputLabel">OG:</div>
                 <input 
                     type="text"
                     name="og" 
@@ -85,7 +85,7 @@ class Abv extends React.Component {
                     onChange={this.handleChange}
                 />
                 <br></br>
-                <label>FG:</label>
+                <div className="inputLabel">FG:</div>
                 <input 
                     type="text"
                     name="fg" 
@@ -107,7 +107,7 @@ class Abv extends React.Component {
 class Calc extends React.Component {
     render() {
         return (
-            <div className="flexContaner">
+            <div className="flexContainer">
                 <Abv />
                 <Ibu />
             </div>

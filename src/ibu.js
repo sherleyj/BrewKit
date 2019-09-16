@@ -1,7 +1,7 @@
 import React from 'react';
 
 // http://howtobrew.com/book/section-1/hops/hop-bittering-calculations
-// IBU = AAU * U * 75 / 
+// IBU = AAU * U * 75 / Vrecipe
 
 
 class Ibu extends React.Component {
@@ -11,7 +11,7 @@ class Ibu extends React.Component {
             boilSizeGAL : 6.5,
             batchSizeGAL : 5,
             og : 5.25,
-            totalIbu : 'Yay',
+            totalIbu : 0,
             hops : [
                 {
                     ounces: null,
@@ -28,6 +28,7 @@ class Ibu extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleAddHopClick = this.handleAddHopClick.bind(this);
     this.handleHopChange = this.handleHopChange.bind(this);
+    this.updateHop = this.updateHop.bind(this);
 
     }
 
@@ -48,25 +49,45 @@ class Ibu extends React.Component {
     }
 
     calcIbu() {
+        const hops = this.state.hops;
+        
+        let totalIbu = 0;
+        for (let hop of hops) {
+            totalIbu += hop.ibus;
+        }
+
         this.setState({
-            totalIbu : 'IBU calculated!',
+            totalIbu : totalIbu,
         });
-        console.log("aau: ", this.state.hops[0].aau);
+        console.log("totalIbu: ", this.state.totalIbu);
     }
 
     handleChange(event) {
-        console.log("*********************");
         console.log("event target name: ", event.target.name);
         console.log("event target value: ", event.target.value);
+
+        let hops = this.state.hops;
+        hops.forEach(this.updateHop);
         this.setState({
             [event.target.name] : event.target.value,
-            // abv : (this.state.og - this.state.fg) * 131.25,
+            hops : hops,
         });
         event.preventDefault();
         console.log("boilSizeGAL: ", Math.floor(this.state.boilSizeGAL));
         console.log("batchSizeGAL: ", Math.floor(this.state.batchSizeGAL));
         console.log("og: ", this.state.og);
         console.log("hops[0]: ", this.state.hops[0].aau);
+    }
+
+    updateHop(hop, i) {
+        console.log("*** update hop ***");
+        console.log("i: " + i + ". hop.ounces: " + hop.ounces + ", hop.alphaAcid: " + hop.alphaAcid);
+        console.log(typeof(this) == 'undefined');
+        if (hop.ounces && hop.alphaAcid) {
+            hop.aau = Math.round(hop.ounces * hop.alphaAcid * 1000) / 1000;
+            hop.utilization = this.calc_utilization(hop);  
+            hop.ibus = Math.round((hop.utilization * hop.aau * 75 * 1000)/this.state.batchSizeGAL) / 1000;
+        }
     }
 
     handleSubmit(event) {
@@ -81,9 +102,12 @@ class Ibu extends React.Component {
         console.log('*****handleHopChange******');
         hop[event.target.name] = event.target.value;
         console.log("ounces " + hop.ounces + ". Alpha Acid: " +  hop.alphaAcid);
-        hop.aau = (hop.ounces && hop.alphaAcid) ? Math.round(hop.ounces * hop.alphaAcid * 1000) /1000 : null;
-        hop.utilization = this.calc_utilization(hop);
-        hop.ibus = Math.round(hop.utilization * hop.aau * 75 * 1000) / 1000;
+
+        if (hop.ounces && hop.alphaAcid) {
+            hop.aau = Math.round(hop.ounces * hop.alphaAcid * 1000) / 1000;
+            hop.utilization = this.calc_utilization(hop);
+            hop.ibus = Math.round((hop.utilization * hop.aau * 75 * 1000)/this.state.batchSizeGAL) / 1000;
+        }
         hops[i] = hop;
 
         console.log('AFTER::: ');
@@ -118,38 +142,43 @@ class Ibu extends React.Component {
         const hops = this.state.hops;
         const hopsToRender = hops.map((hop, i) => {
             return ( 
-            <div key={i}>
-            <h6>Hop {i + 1}</h6>
-            <label>Ounces:</label>
-                <input 
-                    type="text"
-                    name="ounces" 
-                    defaultValue={hop.ounces}
-                    onChange={(event) => this.handleHopChange(event, i)}
-                />
-            <br></br>
-            <label>% Alpha Acid:</label>
-                <input 
-                    type="text"
-                    name="alphaAcid" 
-                    defaultValue={hop.alphaAcid}
-                    onChange={(event) => this.handleHopChange(event, i)}
-                />
-            <br></br>
-            <label>Boil Time in Minutes:</label>
-                <input 
-                    type="text"
-                    name="boilTime" 
-                    defaultValue={hop.boilTime}
-                    onChange={(event) => this.handleHopChange(event, i)}
-                />
-            <br></br>
-            <label>Utilization:</label>
-            <span>{this.state.hops[i].utilization}</span>
-            <br></br>
-            <label>ibus:</label>
-            <span>{this.state.hops[i].ibus}</span>
-            
+            <div key={i} className="hop">
+            <div>Hop {i + 1}</div>
+            <div>
+                <div className="inputLabel">Ounces:</div>
+                    <input 
+                        type="text"
+                        name="ounces" 
+                        defaultValue={hop.ounces}
+                        onChange={(event) => this.handleHopChange(event, i)}
+                    />
+            </div>
+            <div>
+                <div className="inputLabel">% Alpha Acid:</div>
+                    <input 
+                        type="text"
+                        name="alphaAcid" 
+                        defaultValue={hop.alphaAcid}
+                        onChange={(event) => this.handleHopChange(event, i)}
+                    />
+            </div>
+            <div>
+                <div className="inputLabel">Boil Time in Minutes:</div>
+                    <input 
+                        type="text"
+                        name="boilTime" 
+                        defaultValue={hop.boilTime}
+                        onChange={(event) => this.handleHopChange(event, i)}
+                    />
+                </div>
+            <div>
+                <div className="inputLabel">Utilization:</div>
+                <span>{this.state.hops[i].utilization}</span>
+            </div>
+            <div>
+                <div className="inputLabel">ibus:</div>
+                <span>{this.state.hops[i].ibus}</span>
+            </div>
             </div>
             );
         });
@@ -159,37 +188,42 @@ class Ibu extends React.Component {
             <div className="flexItemInner">
             <h2>IBU Calculator</h2>
             <form id="ibuForm" onSubmit={this.handleSubmit}>
-                <label>Boil Size in Gallons:</label>
-                <input 
-                    type="text"
-                    name="boilSizeGAL" 
-                    defaultValue={this.state.boilSizeGAL}
-                    onChange={this.handleChange}
-                />
-                <br></br>
-                <label>Batch Size in Gallons:</label>
-                <input 
-                    type="text"
-                    name="batchSizeGAL" 
-                    defaultValue={this.state.batchSizeGAL}
-                    onChange={this.handleChange}
-                />
-                <br></br>
-                <label>OG:</label>
-                <input 
-                    type="text"
-                    name="og" 
-                    defaultValue={this.state.fg}
-                    onChange={this.handleChange}
-                />
-                <br></br>
+                <div>
+                    <div className="inputLabel">Boil Size in Gallons:</div>
+                    <input 
+                        type="text"
+                        name="boilSizeGAL" 
+                        defaultValue={this.state.boilSizeGAL}
+                        onChange={this.handleChange}
+                    />
+                </div>
+                <div>
+                    <div className="inputLabel">Batch Size in Gallons:</div>
+                    <input 
+                        type="text"
+                        name="batchSizeGAL" 
+                        defaultValue={this.state.batchSizeGAL}
+                        onChange={this.handleChange}
+                    />
+                </div>
+                <div>
+                    <div className="inputLabel">OG:</div>
+                    <input 
+                        type="text"
+                        name="og" 
+                        defaultValue={this.state.fg}
+                        onChange={this.handleChange}
+                    />
+                </div>
                 <input type="submit" value="submit"/>
                 <br></br>
+
                 <h5>HOPS:</h5>
                 <div>{hopsToRender}</div>
-                <button form_id="hopsForm" onClick={this.handleAddHopClick}>Add Hop</button>
+                <input type="submit" form_id="hopsForm" onClick={this.handleAddHopClick} value="Add Hop"/>
+
             </form>
-            <div>{this.state.totalIbu}</div>
+            <div className="totalIbu">{this.state.totalIbu}</div>
             </div>
             </div>
         );

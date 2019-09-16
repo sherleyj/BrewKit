@@ -4,7 +4,7 @@
     font-size: 40px;
 }
 
-.flexContaner {
+.flexContainer {
     display: flex;
     justify-content: center;
     flex-direction: row;
@@ -17,10 +17,27 @@
 }
 
 .flexItemInner {
-    width: 300px;
+    width: 90%;
     margin: 0 auto;
 }
 
-.input {
-    padding: 10px;
+input[type=text] {
+    /* margin-left: 5px; */
+    width: 100%;
+}
+
+input[type=submit]{
+    padding: 7px;
+}
+.inputLabel {
+    /* display: inline-block; */
+}
+
+.hop {
+    /* padding: 10px; */
+}
+
+.totalIbu {
+    padding: 20px;
+
 }
