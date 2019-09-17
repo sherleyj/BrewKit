@@ -59,42 +59,45 @@ class Abv extends React.Component {
             <div className="flexItemInner">
             <h2>ABV Calculator</h2>
             <form onSubmit={this.handleSubmit}>
-                <div className="inputLabel">Equation:</div>
-                <br></br>
-                <input 
-                    type="radio" 
-                    name="formula"
-                    value="std"
-                    checked={this.state.formula === "std"}
-                    onChange={this.handleChange}
-                /> <span>Standard</span>
-                <br></br>
-                <input 
-                    type="radio" 
-                    name="formula"
-                    value="alt"
-                    checked={this.state.formula === "alt"}
-                    onChange={this.handleChange}
-                /> <span>Alternate (for high ABV)</span>
-                <br></br><br></br>
-                <div className="inputLabel">OG:</div>
-                <input 
-                    type="text"
-                    name="og" 
-                    defaultValue={this.state.og}
-                    onChange={this.handleChange}
-                />
-                <br></br>
-                <div className="inputLabel">FG:</div>
-                <input 
-                    type="text"
-                    name="fg" 
-                    defaultValue={this.state.fg}
-                    onChange={this.handleChange}
-                />
-                <br></br>
+                <div className="input-wrapper">
+                    <div className="inputLabel">Equation:</div>
+                    <br></br>
+                    <input 
+                        type="radio" 
+                        name="formula"
+                        value="std"
+                        checked={this.state.formula === "std"}
+                        onChange={this.handleChange}
+                    /> <span>Standard</span>
+                    <br></br>
+                    <input 
+                        type="radio" 
+                        name="formula"
+                        value="alt"
+                        checked={this.state.formula === "alt"}
+                        onChange={this.handleChange}
+                    /> <span>Alternate (for high ABV)</span>
+                    <br></br><br></br>
+                </div>
+                <div className="input-wrapper">
+                    <div className="inputLabel">OG:</div>
+                    <input 
+                        type="text"
+                        name="og" 
+                        defaultValue={this.state.og}
+                        onChange={this.handleChange}
+                    />
+                </div>
+                <div className="input-wrapper">
+                    <div className="inputLabel">FG:</div>
+                    <input 
+                        type="text"
+                        name="fg" 
+                        defaultValue={this.state.fg}
+                        onChange={this.handleChange}
+                    />
+                </div>
                 <input type="submit" value="submit"/>
-                <br></br>
             </form>
             <div>{this.state.abv}</div>
             </div>
@@ -116,4 +119,4 @@ class Calc extends React.Component {
 
 }
 
-ReactDOM.render(<Calc />, document.getElementById('abv'));
+ReactDOM.render(<Calc />, document.getElementById('calc'));

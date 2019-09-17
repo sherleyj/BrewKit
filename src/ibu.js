@@ -144,7 +144,7 @@ class Ibu extends React.Component {
             return ( 
             <div key={i} className="hop">
             <div>Hop {i + 1}</div>
-            <div>
+            <div className="input-wrapper">
                 <div className="inputLabel">Ounces:</div>
                     <input 
                         type="text"
@@ -153,7 +153,7 @@ class Ibu extends React.Component {
                         onChange={(event) => this.handleHopChange(event, i)}
                     />
             </div>
-            <div>
+            <div className="input-wrapper">
                 <div className="inputLabel">% Alpha Acid:</div>
                     <input 
                         type="text"
@@ -162,7 +162,7 @@ class Ibu extends React.Component {
                         onChange={(event) => this.handleHopChange(event, i)}
                     />
             </div>
-            <div>
+            <div className="input-wrapper">
                 <div className="inputLabel">Boil Time in Minutes:</div>
                     <input 
                         type="text"
@@ -171,11 +171,11 @@ class Ibu extends React.Component {
                         onChange={(event) => this.handleHopChange(event, i)}
                     />
                 </div>
-            <div>
+            <div className="input-wrapper">
                 <div className="inputLabel">Utilization:</div>
                 <span>{this.state.hops[i].utilization}</span>
             </div>
-            <div>
+            <div className="input-wrapper">
                 <div className="inputLabel">ibus:</div>
                 <span>{this.state.hops[i].ibus}</span>
             </div>
@@ -188,7 +188,7 @@ class Ibu extends React.Component {
             <div className="flexItemInner">
             <h2>IBU Calculator</h2>
             <form id="ibuForm" onSubmit={this.handleSubmit}>
-                <div>
+                <div className="input-wrapper">
                     <div className="inputLabel">Boil Size in Gallons:</div>
                     <input 
                         type="text"
@@ -197,7 +197,7 @@ class Ibu extends React.Component {
                         onChange={this.handleChange}
                     />
                 </div>
-                <div>
+                <div className="input-wrapper">
                     <div className="inputLabel">Batch Size in Gallons:</div>
                     <input 
                         type="text"
@@ -206,7 +206,7 @@ class Ibu extends React.Component {
                         onChange={this.handleChange}
                     />
                 </div>
-                <div>
+                <div className="input-wrapper">
                     <div className="inputLabel">OG:</div>
                     <input 
                         type="text"
@@ -219,7 +219,7 @@ class Ibu extends React.Component {
                 <br></br>
 
                 <h5>HOPS:</h5>
-                <div>{hopsToRender}</div>
+                <div className="hops-wrapper">{hopsToRender}</div>
                 <input type="submit" form_id="hopsForm" onClick={this.handleAddHopClick} value="Add Hop"/>
 
             </form>
