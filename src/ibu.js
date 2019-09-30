@@ -219,11 +219,18 @@ class Ibu extends React.Component {
                 <br></br>
 
                 <h5>HOPS:</h5>
-                <div className="hops-wrapper">{hopsToRender}</div>
-                <input type="submit" form_id="hopsForm" onClick={this.handleAddHopClick} value="Add Hop"/>
+                <div className="hops-wrapper">
+                    {hopsToRender}
+                    <div className="btn_total_container">
+                        <input type="submit" className="add-hop-btn" onClick={this.handleAddHopClick} value="Add Hop"/>
+                        <div className="total-ibu">
+                            <div>Total Ibu</div>
+                        {this.state.totalIbu}
+                        </div>
+                    </div>
+                </div>
 
             </form>
-            <div className="totalIbu">{this.state.totalIbu}</div>
             </div>
             </div>
         );

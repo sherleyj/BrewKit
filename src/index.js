@@ -40,10 +40,10 @@ class Abv extends React.Component {
         const og = this.state.og;
         const fg = this.state.fg;
         if (this.state.formula === 'std') {
-            abv = (og - fg) * 131.25;
+            abv = Math.round((og - fg) * 131.25 *1000) / 1000;
         }
         else {
-            abv = (76.08 * (og-fg) / (1.775-og)) * (fg / 0.794);
+            abv = Math.round((76.08 * (og-fg) / (1.775-og)) * (fg / 0.794) * 1000) / 1000;
         }
         this.setState({
             abv : abv,
