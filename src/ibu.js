@@ -10,7 +10,7 @@ class Ibu extends React.Component {
         this.state = {
             boilSizeGAL : 6.5,
             batchSizeGAL : 5,
-            og : 5.25,
+            og : null,
             totalIbu : 0,
             hops : [
                 {
@@ -25,7 +25,7 @@ class Ibu extends React.Component {
         };
     // binding necessary to make "this" work in the callback
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleIBUChange = this.handleIBUChange.bind(this);
     this.handleAddHopClick = this.handleAddHopClick.bind(this);
     this.handleHopChange = this.handleHopChange.bind(this);
     this.updateHop = this.updateHop.bind(this);
@@ -62,17 +62,19 @@ class Ibu extends React.Component {
         console.log("totalIbu: ", this.state.totalIbu);
     }
 
-    handleChange(event) {
+    // In Javascript, when you create an object literal {} and you wrap the object’s key 
+    // in array brackets [key] you can dynamically set that key.
+    // https://medium.com/@bretdoucette/understanding-this-setstate-name-value-a5ef7b4ea2b4
+    handleIBUChange(event) {
+        event.preventDefault();
+        console.log("*************handleIBUChange*************");
         console.log("event target name: ", event.target.name);
         console.log("event target value: ", event.target.value);
 
-        let hops = this.state.hops;
-        hops.forEach(this.updateHop);
         this.setState({
             [event.target.name] : event.target.value,
-            hops : hops,
-        });
-        event.preventDefault();
+        }, this.handleSubmit);
+
         console.log("boilSizeGAL: ", Math.floor(this.state.boilSizeGAL));
         console.log("batchSizeGAL: ", Math.floor(this.state.batchSizeGAL));
         console.log("og: ", this.state.og);
@@ -88,12 +90,20 @@ class Ibu extends React.Component {
             hop.utilization = this.calc_utilization(hop);  
             hop.ibus = Math.round((hop.utilization * hop.aau * 75 * 1000)/this.state.batchSizeGAL) / 1000;
         }
+        console.log("i: " + i + ". hop.aau: " + hop.aau + ", hop.utilization: " + hop.utilization);
     }
 
     handleSubmit(event) {
-        this.calcIbu();
-        event.preventDefault();
+        // event.preventDefault();
 
+        let hops = this.state.hops;
+        hops.forEach(this.updateHop);
+
+        this.setState({
+            hops: hops,
+        });
+
+        this.calcIbu();
     }
 
     handleHopChange(event, i) {
@@ -119,6 +129,7 @@ class Ibu extends React.Component {
         console.log("alphaAcid: ", this.state.hops[i].alphaAcid);
         console.log("aau: ", this.state.hops[i].aau);
         console.log("utilization: ", this.state.hops[i].utilization);
+        console.log("og: ", this.state.og);
         event.preventDefault();
     }
 
@@ -194,7 +205,7 @@ class Ibu extends React.Component {
                         type="text"
                         name="boilSizeGAL" 
                         defaultValue={this.state.boilSizeGAL}
-                        onChange={this.handleChange}
+                        onChange={this.handleIBUChange}
                     />
                 </div>
                 <div className="input-wrapper">
@@ -203,7 +214,7 @@ class Ibu extends React.Component {
                         type="text"
                         name="batchSizeGAL" 
                         defaultValue={this.state.batchSizeGAL}
-                        onChange={this.handleChange}
+                        onChange={this.handleIBUChange}
                     />
                 </div>
                 <div className="input-wrapper">
@@ -212,7 +223,7 @@ class Ibu extends React.Component {
                         type="text"
                         name="og" 
                         defaultValue={this.state.fg}
-                        onChange={this.handleChange}
+                        onChange={this.handleIBUChange}
                     />
                 </div>
                 <input type="submit" value="submit"/>
