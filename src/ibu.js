@@ -17,8 +17,8 @@ class Ibu extends React.Component {
                     ounces: null,
                     alphaAcid: null,
                     boilTime: null,
-                    utilization: null,
-                    ibus: null,
+                    utilization: 0,
+                    ibus: 0,
                     aau: null,
                 }
             ],
@@ -85,7 +85,7 @@ class Ibu extends React.Component {
         console.log("*** update hop ***");
         console.log("i: " + i + ". hop.ounces: " + hop.ounces + ", hop.alphaAcid: " + hop.alphaAcid);
         console.log(typeof(this) == 'undefined');
-        if (hop.ounces && hop.alphaAcid) {
+        if (hop.ounces && hop.alphaAcid && this.state.og) {
             hop.aau = Math.round(hop.ounces * hop.alphaAcid * 1000) / 1000;
             hop.utilization = this.calc_utilization(hop);  
             hop.ibus = Math.round((hop.utilization * hop.aau * 75 * 1000)/this.state.batchSizeGAL) / 1000;
@@ -93,9 +93,7 @@ class Ibu extends React.Component {
         console.log("i: " + i + ". hop.aau: " + hop.aau + ", hop.utilization: " + hop.utilization);
     }
 
-    handleSubmit(event) {
-        // event.preventDefault();
-
+    handleSubmit() {
         let hops = this.state.hops;
         hops.forEach(this.updateHop);
 
@@ -104,6 +102,10 @@ class Ibu extends React.Component {
         });
 
         this.calcIbu();
+        // passing in event when calling handleSubmit caused React
+        // to queue up the setState in handleIBUChange.  Values were one step behind.
+        // I ended up removing submit button too.
+        // event.preventDefault();
     }
 
     handleHopChange(event, i) {
@@ -113,7 +115,7 @@ class Ibu extends React.Component {
         hop[event.target.name] = event.target.value;
         console.log("ounces " + hop.ounces + ". Alpha Acid: " +  hop.alphaAcid);
 
-        if (hop.ounces && hop.alphaAcid) {
+        if (hop.ounces && hop.alphaAcid && this.state.og) {
             hop.aau = Math.round(hop.ounces * hop.alphaAcid * 1000) / 1000;
             hop.utilization = this.calc_utilization(hop);
             hop.ibus = Math.round((hop.utilization * hop.aau * 75 * 1000)/this.state.batchSizeGAL) / 1000;
@@ -140,12 +142,14 @@ class Ibu extends React.Component {
             ounces: null,
             alphaAcid: null,
             boilTime: null,
-            utilization: null,
-            ibus: null,
+            utilization: 0,
+            ibus: 0,
+            aau: null,
         }
         this.setState({
             hops : this.state.hops.concat(newHop),
         });
+        event.preventDefault();
     }
 
 
@@ -226,7 +230,12 @@ class Ibu extends React.Component {
                         onChange={this.handleIBUChange}
                     />
                 </div>
-                <input type="submit" value="submit"/>
+                <div className="total-ibu">
+                            <div>Total Ibu</div>
+                        {this.state.totalIbu}
+                </div>
+                {/* Removing Submit button.  I want to upate all values with onChange event. */}
+                {/* <input type="submit" value="submit"/> */}
                 <br></br>
 
                 <h5>HOPS:</h5>
@@ -234,10 +243,6 @@ class Ibu extends React.Component {
                     {hopsToRender}
                     <div className="btn_total_container">
                         <input type="submit" className="add-hop-btn" onClick={this.handleAddHopClick} value="Add Hop"/>
-                        <div className="total-ibu">
-                            <div>Total Ibu</div>
-                        {this.state.totalIbu}
-                        </div>
                     </div>
                 </div>
 
