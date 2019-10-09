@@ -47,6 +47,7 @@ body {
     background-color: #fdfdfd;
     box-shadow: 0 1px 8px 0 rgba(0,0,0,.2);
     /* box-shadow: 4px 4px 4px #eaeaec; */
+    padding-bottom: 20px;
 }
 
 .flexItemInner {
@@ -81,39 +82,87 @@ input[type=submit]{
     padding: 5px;
     margin-top: 10px;
     font-size: 15px;
-    display: block;
+    /* display: block; */
 }
+
+.bv-submit-btn {
+    font-size: 15px;
+}
+
+.abv-value {
+    font-size: 15px; 
+    color: #296c60;
+    padding-top: 6px;
+    color: #943b47
+}
+
 .inputLabel {
     /* display: inline-block; */
     padding-bottom: 3px;
 }
 
 .hops-wrapper {
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: center; */
     /* justify-content: center; */
+}
+
+.hop-title {
+    color: #758e86;
+    font-size: 18px;
+    padding-bottom: 5px;
 }
 
 .hop {
     /* padding: 10px; */
-    flex-basis: 45%;
+    /* flex-basis: 45%;
     padding-right: 10px;
+    padding-bottom: 10px; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
     padding-bottom: 10px;
+    padding-top: 10px;
+    border-top: .9px solid #758e86;
 }
 
-.totalIbu {
-    padding: 20px;
-
+.hop-submit-btn {
+    /* display: inline; */
+    margin-right: 10px;
+    background-color: #fdfdfd;
 }
 
 .input-wrapper {
     /* margin: 3px 0px; */
     /* margin-top: 3px; */
-    margin-bottom: 10px;
+    /* margin: 10px; */
     display: inline;
 }
+
+.hop-alpha-acid {
+    flex-basis: 33%;
+}
+
+.hop-ounces {
+    flex-basis: 33%;
+}
+
+.hop-boil-time {
+    flex-basis: 33%;
+}
+
+.hop-utilization {
+    padding-right: 20px;
+    padding-top: 10px;
+}
+
+.hop-ibu {
+    padding-top: 10px;
+}
+
 
 .btn_total_container {
     display: flex;
@@ -122,16 +171,16 @@ input[type=submit]{
     justify-content: center;
 }
 .add-hop-btn {
-    flex-basis: 20%;
+    /* flex-basis: 30%; */
     /* min-height: 100px; */
     /* margin: 10px 30px 10px 30px; */
-    padding: 0;
+    margin-right: 10px;
     background-color: #fdfdfd;
-    padding-bottom: 30px;
-    height: 100px;
+    /* padding-bottom: 30px; */
+    /* height: 100px; */
     /* margin: 0 auto; */
     /* box-shadow: 1px 1px 4px #eaeaec; */
-
+    /* display: inline; */
 }
 
 .total-ibu {
@@ -141,4 +190,11 @@ input[type=submit]{
     /* min-height: 100px; */
     /* text-align: center; */
     /* margin: 0 auto; */
+    padding-top: 6px;
+    color: #943b47
 }
+
+.hops-header {
+    margin-bottom: 10px;
+}
+

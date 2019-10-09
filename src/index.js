@@ -27,7 +27,7 @@ class Abv extends React.Component {
         console.log("formula before: ", this.state.formula);
         this.setState({
             [event.target.name] : event.target.value,
-        }, this.handleSubmit);
+        });
         console.log("og: ", this.state.og);
         console.log("fg :", this.state.fg);
         console.log("abv: ", this.state.abv);
@@ -35,7 +35,7 @@ class Abv extends React.Component {
         event.preventDefault();
     }
 
-    handleSubmit() {
+    handleSubmit(event) {
         let abv = 0;
         const og = this.state.og;
         const fg = this.state.fg;
@@ -49,7 +49,7 @@ class Abv extends React.Component {
             abv : abv,
         });
         console.log("abv: ", this.state.abv);
-        // event.preventDefault();
+        event.preventDefault();
     }
 
 
@@ -58,7 +58,7 @@ class Abv extends React.Component {
             <div className="flexItem abv">
             <div className="flexItemInner">
             <h2>ABV Calculator</h2>
-            <form >
+            <form onSubmit={this.handleSubmit}>
                 <div className="input-wrapper">
                     <div className="inputLabel">Equation:</div>
                     <br></br>
@@ -97,9 +97,13 @@ class Abv extends React.Component {
                         onChange={this.handleChange}
                     />
                 </div>
-                {/* <input type="submit" value="submit"/> */}
+                <br></br>
+                <input type="submit" value="submit" className="abv-submit-btn"/>
             </form>
-            <div>{this.state.abv}</div>
+            <div className="abv-value">
+                <span>ABV:  </span>
+                {this.state.abv}
+            </div>
             </div>
             </div>
         );

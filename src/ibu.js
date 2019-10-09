@@ -55,9 +55,9 @@ class Ibu extends React.Component {
         for (let hop of hops) {
             totalIbu += hop.ibus;
         }
-
+        
         this.setState({
-            totalIbu : totalIbu,
+            totalIbu : Math.round(totalIbu * 1000) / 1000,
         });
         console.log("totalIbu: ", this.state.totalIbu);
     }
@@ -73,7 +73,7 @@ class Ibu extends React.Component {
 
         this.setState({
             [event.target.name] : event.target.value,
-        }, this.handleSubmit);
+        }, this.updateAllHops);
 
         console.log("boilSizeGAL: ", Math.floor(this.state.boilSizeGAL));
         console.log("batchSizeGAL: ", Math.floor(this.state.batchSizeGAL));
@@ -93,7 +93,7 @@ class Ibu extends React.Component {
         console.log("i: " + i + ". hop.aau: " + hop.aau + ", hop.utilization: " + hop.utilization);
     }
 
-    handleSubmit() {
+    handleSubmit(event) {
         let hops = this.state.hops;
         hops.forEach(this.updateHop);
 
@@ -102,10 +102,19 @@ class Ibu extends React.Component {
         });
 
         this.calcIbu();
+
         // passing in event when calling handleSubmit caused React
         // to queue up the setState in handleIBUChange.  Values were one step behind.
-        // I ended up removing submit button too.
-        // event.preventDefault();
+        event.preventDefault();
+    }
+
+    updateAllHops() {
+        let hops = this.state.hops;
+        hops.forEach(this.updateHop);
+
+        this.setState({
+            hops: hops,
+        });
     }
 
     handleHopChange(event, i) {
@@ -158,8 +167,8 @@ class Ibu extends React.Component {
         const hopsToRender = hops.map((hop, i) => {
             return ( 
             <div key={i} className="hop">
-            <div>Hop {i + 1}</div>
-            <div className="input-wrapper">
+            {/* <div className="hop-title">{i + 1}</div> */}
+            <div className="input-wrapper hop-ounces">
                 <div className="inputLabel">Ounces:</div>
                     <input 
                         type="text"
@@ -168,7 +177,7 @@ class Ibu extends React.Component {
                         onChange={(event) => this.handleHopChange(event, i)}
                     />
             </div>
-            <div className="input-wrapper">
+            <div className="input-wrapper hop-alpha-acid">
                 <div className="inputLabel">% Alpha Acid:</div>
                     <input 
                         type="text"
@@ -177,7 +186,7 @@ class Ibu extends React.Component {
                         onChange={(event) => this.handleHopChange(event, i)}
                     />
             </div>
-            <div className="input-wrapper">
+            <div className="input-wrapper hop-boil-time">
                 <div className="inputLabel">Boil Time in Minutes:</div>
                     <input 
                         type="text"
@@ -186,11 +195,11 @@ class Ibu extends React.Component {
                         onChange={(event) => this.handleHopChange(event, i)}
                     />
                 </div>
-            <div className="input-wrapper">
+            <div className="input-wrapper hop-utilization">
                 <div className="inputLabel">Utilization:</div>
                 <span>{this.state.hops[i].utilization}</span>
             </div>
-            <div className="input-wrapper">
+            <div className="input-wrapper hop-ibu">
                 <div className="inputLabel">ibus:</div>
                 <span>{this.state.hops[i].ibus}</span>
             </div>
@@ -231,21 +240,20 @@ class Ibu extends React.Component {
                     />
                 </div>
                 <div className="total-ibu">
-                            <div>Total Ibu</div>
-                        {this.state.totalIbu}
+                    <span>TOTAL IBU:  </span>
+                    {this.state.totalIbu}
                 </div>
                 {/* Removing Submit button.  I want to upate all values with onChange event. */}
                 {/* <input type="submit" value="submit"/> */}
-                <br></br>
+                
 
-                <h5>HOPS:</h5>
+                <h5 className="hops-header">HOPS:</h5>
                 <div className="hops-wrapper">
                     {hopsToRender}
-                    <div className="btn_total_container">
-                        <input type="submit" className="add-hop-btn" onClick={this.handleAddHopClick} value="Add Hop"/>
-                    </div>
+                    <input type="submit" className="add-hop-btn" onClick={this.handleAddHopClick} value="Add Hop"/>
+                    <input type="submit" value="Submit" className="hop-submit-btn"/> 
                 </div>
-
+                
             </form>
             </div>
             </div>
