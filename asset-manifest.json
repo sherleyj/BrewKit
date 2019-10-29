@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/BrewKit/static/css/main.20b37a9d.chunk.css",
-    "main.js": "/BrewKit/static/js/main.eaeae026.chunk.js",
-    "main.js.map": "/BrewKit/static/js/main.eaeae026.chunk.js.map",
+    "main.css": "/BrewKit/static/css/main.20ea30dc.chunk.css",
+    "main.js": "/BrewKit/static/js/main.6ee5b9ed.chunk.js",
+    "main.js.map": "/BrewKit/static/js/main.6ee5b9ed.chunk.js.map",
     "runtime~main.js": "/BrewKit/static/js/runtime~main.276a2c14.js",
     "runtime~main.js.map": "/BrewKit/static/js/runtime~main.276a2c14.js.map",
     "static/js/2.2ec475fb.chunk.js": "/BrewKit/static/js/2.2ec475fb.chunk.js",
     "static/js/2.2ec475fb.chunk.js.map": "/BrewKit/static/js/2.2ec475fb.chunk.js.map",
     "index.html": "/BrewKit/index.html",
-    "precache-manifest.f5218f4b1ee009a9a8d5ded90e61f2cd.js": "/BrewKit/precache-manifest.f5218f4b1ee009a9a8d5ded90e61f2cd.js",
+    "precache-manifest.266391567491f1e8bb8b700a37ff12bc.js": "/BrewKit/precache-manifest.266391567491f1e8bb8b700a37ff12bc.js",
     "service-worker.js": "/BrewKit/service-worker.js",
-    "static/css/main.20b37a9d.chunk.css.map": "/BrewKit/static/css/main.20b37a9d.chunk.css.map"
+    "static/css/main.20ea30dc.chunk.css.map": "/BrewKit/static/css/main.20ea30dc.chunk.css.map"
   }
 }
