@@ -1,4 +1,5 @@
 import React from 'react';
+import { thisTypeAnnotation } from '@babel/types';
 
 // http://howtobrew.com/book/section-1/hops/hop-bittering-calculations
 // IBU = AAU * U * 75 / Vrecipe
@@ -10,7 +11,8 @@ class Ibu extends React.Component {
         this.state = {
             boilSizeGAL : 6.5,
             batchSizeGAL : 5,
-            og : null,
+            target_og : null,
+            boil_gravity : null,
             totalIbu : 0,
             hops : [
                 {
@@ -37,15 +39,38 @@ class Ibu extends React.Component {
     // f(T) = [1 - e^(-0.04 x T)] / 4.15
     calc_utilization(hop) {
         console.log("***Utilization***");
-        const og = this.state.og;
+        // const boil_gravity = this.state.boil_gravity;
         let utl = 0;
-        const fG = 1.65 * 0.000125**(og - 1);
+        // calculate and set state the boil_gravity
+        
+        this.setState({
+            boil_gravity: this.gravityAdjustByVolume(this.state.target_og, this.state.batchSizeGAL, this.state.boilSizeGAL),
+        });
+        const fG_starting = 1.65 * 0.000125**(this.state.boil_gravity - 1);
+        const fG_target = 1.65 * 0.000125**(this.state.target_og - 1);
+        const fG = (fG_target + fG_starting) / 2;
+
         const fT = (1 - Math.E**(-0.04 * hop.boilTime)) / 4.15;
- 
+
         utl = Math.round(fG * fT * 1000)/1000;
         console.log("fG: " + fG + ", fT: " + fT + ", utilization: " + utl );
 
         return utl;
+    }
+
+    // calculates current gravity based on a known target gravity, target volume, and current volume.
+    // https://www.wildabouthops.nz/how_to_adjust_specific_gravity.html
+    gravityAdjustByVolume(target_gravity, target_vol, current_vol) {
+        const tg_points = this.gravityPoints(target_gravity)
+        const total_target_points = tg_points * target_vol
+        const curr_gravity_points = Math.round(total_target_points / current_vol)
+
+        console.log("new boil gravity points: " + curr_gravity_points)
+        return (curr_gravity_points / 1000) + 1
+    }
+
+    gravityPoints(gravity) {
+        return (gravity * 1000) % 1000
     }
 
     calcIbu() {
@@ -65,27 +90,26 @@ class Ibu extends React.Component {
     // In Javascript, when you create an object literal {} and you wrap the object’s key 
     // in array brackets [key] you can dynamically set that key.
     // https://medium.com/@bretdoucette/understanding-this-setstate-name-value-a5ef7b4ea2b4
+    // TODO: Calculate and update boil_gravity
     handleIBUChange(event) {
         event.preventDefault();
         console.log("*************handleIBUChange*************");
         console.log("event target name: ", event.target.name);
         console.log("event target value: ", event.target.value);
 
+
         this.setState({
             [event.target.name] : event.target.value,
         }, this.updateAllHops);
 
-        console.log("boilSizeGAL: ", Math.floor(this.state.boilSizeGAL));
-        console.log("batchSizeGAL: ", Math.floor(this.state.batchSizeGAL));
-        console.log("og: ", this.state.og);
-        console.log("hops[0]: ", this.state.hops[0].aau);
+        console.log("boilSizeGAL: ", Math.floor(this.state.boilSizeGAL) + " ,batchSizeGAL: ", Math.floor(this.state.batchSizeGAL) + " ,target_og: ", this.state.target_og + " ,boil_gravity: ", this.state.boil_gravity + " ,hops[0]: ", this.state.hops[0].aau);
     }
 
     updateHop(hop, i) {
         console.log("*** update hop ***");
         console.log("i: " + i + ". hop.ounces: " + hop.ounces + ", hop.alphaAcid: " + hop.alphaAcid);
         console.log(typeof(this) == 'undefined');
-        if (hop.ounces && hop.alphaAcid && this.state.og) {
+        if (hop.ounces && hop.alphaAcid && this.state.target_og) {
             hop.aau = Math.round(hop.ounces * hop.alphaAcid * 1000) / 1000;
             hop.utilization = this.calc_utilization(hop);  
             hop.ibus = Math.round((hop.utilization * hop.aau * 75 * 1000)/this.state.batchSizeGAL) / 1000;
@@ -124,7 +148,7 @@ class Ibu extends React.Component {
         hop[event.target.name] = event.target.value;
         console.log("ounces " + hop.ounces + ". Alpha Acid: " +  hop.alphaAcid);
 
-        if (hop.ounces && hop.alphaAcid && this.state.og) {
+        if (hop.ounces && hop.alphaAcid && this.state.target_og) {
             hop.aau = Math.round(hop.ounces * hop.alphaAcid * 1000) / 1000;
             hop.utilization = this.calc_utilization(hop);
             hop.ibus = Math.round((hop.utilization * hop.aau * 75 * 1000)/this.state.batchSizeGAL) / 1000;
@@ -135,12 +159,8 @@ class Ibu extends React.Component {
         this.setState({
             hops : hops,
         });
-        console.log("i: ", i);
-        console.log("ounces: ", this.state.hops[i].ounces);
-        console.log("alphaAcid: ", this.state.hops[i].alphaAcid);
-        console.log("aau: ", this.state.hops[i].aau);
-        console.log("utilization: ", this.state.hops[i].utilization);
-        console.log("og: ", this.state.og);
+
+        console.log("i: " + i + ", ounces: " + this.state.hops[i].ounces + ", alphaAcid: " + this.state.hops[i].alphaAcid + ", aau: " + this.state.hops[i].aau + ", utilization: " + this.state.hops[i].utilization + ", target og: " + this.state.target_og);
         event.preventDefault();
     }
 
@@ -231,17 +251,21 @@ class Ibu extends React.Component {
                     />
                 </div>
                 <div className="input-wrapper">
-                    <div className="inputLabel">OG:</div>
+                    <div className="inputLabel">Target OG:</div>
                     <input 
                         type="text"
-                        name="og" 
+                        name="target_og" 
                         defaultValue={this.state.fg}
                         onChange={this.handleIBUChange}
                     />
                 </div>
-                <div className="total-ibu">
+                <div className="total-ibu red">
                     <span>TOTAL IBU:  </span>
                     {this.state.totalIbu}
+                </div>
+                <div className="red">
+                    <span>Boil Gravity:  </span>
+                    {this.state.boil_gravity}
                 </div>
                 {/* Removing Submit button.  I want to upate all values with onChange event. */}
                 {/* <input type="submit" value="submit"/> */}

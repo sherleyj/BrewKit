@@ -8,6 +8,10 @@ body {
     color: #323333;
 }
 
+.red {
+    color: #943b47 
+}
+
 .site-wrapper {
     margin: 10px;
 }
@@ -164,7 +168,7 @@ input[type=submit]{
 }
 
 
-.btn_total_container {
+.btn-total-container {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -185,13 +189,11 @@ input[type=submit]{
 
 .total-ibu {
     font-size: 15px; 
-    color: #296c60;
     /* flex-basis: 20%; */
     /* min-height: 100px; */
     /* text-align: center; */
     /* margin: 0 auto; */
     padding-top: 6px;
-    color: #943b47
 }
 
 .hops-header {
