@@ -16,28 +16,26 @@ class Gravity extends React.Component {
             measured_gravity : 1.056,
             temp : 80,
             hydrometer_calibration : 60,
-            corrected_gravity : null,
+            corrected_gravity : 1.0585,
         }
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event) {
         this.setState({
             [event.target.name] : event.target.value,
-        });
+        }, this.calcGravityAdjust);
         event.preventDefault();
     }
 
-    handleSubmit(event) {
+    calcGravityAdjust() {
         const corrected_gravity = this.state.measured_gravity*((1.00130346-0.000134722124*this.state.temp+0.00000204052596*Math.pow(this.state.temp,2)-0.00000000232820948* Math.pow(this.state.temp,3))/(1.00130346-0.000134722124*this.state.hydrometer_calibration+0.00000204052596* Math.pow(this.state.hydrometer_calibration,2)-0.00000000232820948*Math.pow(this.state.hydrometer_calibration,3)))
 
         this.setState({
             corrected_gravity : Math.round(corrected_gravity * 10000) / 10000,
         });
 
-        event.preventDefault();
     }
 
 
@@ -76,7 +74,7 @@ class Gravity extends React.Component {
                             />
                         </div>
                         <br></br>
-                        <input type="submit" value="Submit" className="submit-btn"/> 
+                        {/* <input type="submit" value="Submit" className="submit-btn"/>  */}
                     </form>
                     <div className="abv-value">
                         <span>Corrected Gravity:  </span>
