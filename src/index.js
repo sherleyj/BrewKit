@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Ibu from './ibu.js';
 import Abv from './abv.js';
+import Gravity from './gravity.js';
 
 
 class Calc extends React.Component {
@@ -11,6 +12,7 @@ class Calc extends React.Component {
             <div className="flexContainer">
                 <Abv />
                 <Ibu />
+                <Gravity />
             </div>
         );
     }

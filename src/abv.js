@@ -94,7 +94,7 @@ class Abv extends React.Component {
                     />
                 </div>
                 <br></br>
-                <input type="submit" value="submit" className="abv-submit-btn"/>
+                <input type="submit" value="submit" className="submit-btn"/>
             </form>
             <div className="abv-value">
                 <span>ABV:  </span>

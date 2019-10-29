@@ -1,5 +1,5 @@
 import React from 'react';
-import { thisTypeAnnotation } from '@babel/types';
+// import { thisTypeAnnotation } from '@babel/types';
 
 // http://howtobrew.com/book/section-1/hops/hop-bittering-calculations
 // IBU = AAU * U * 75 / Vrecipe
@@ -275,7 +275,7 @@ class Ibu extends React.Component {
                 <div className="hops-wrapper">
                     {hopsToRender}
                     <input type="submit" className="add-hop-btn" onClick={this.handleAddHopClick} value="Add Hop"/>
-                    <input type="submit" value="Submit" className="hop-submit-btn"/> 
+                    <input type="submit" value="Submit" className="submit-btn"/> 
                 </div>
                 
             </form>

@@ -133,7 +133,7 @@ input[type=submit]{
     border-top: .9px solid #758e86;
 }
 
-.hop-submit-btn {
+.submit-btn {
     /* display: inline; */
     margin-right: 10px;
     background-color: #fdfdfd;
