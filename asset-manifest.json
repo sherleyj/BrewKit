@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/BrewKit/static/css/main.20ea30dc.chunk.css",
-    "main.js": "/BrewKit/static/js/main.e24933f8.chunk.js",
-    "main.js.map": "/BrewKit/static/js/main.e24933f8.chunk.js.map",
+    "main.js": "/BrewKit/static/js/main.203f804b.chunk.js",
+    "main.js.map": "/BrewKit/static/js/main.203f804b.chunk.js.map",
     "runtime~main.js": "/BrewKit/static/js/runtime~main.276a2c14.js",
     "runtime~main.js.map": "/BrewKit/static/js/runtime~main.276a2c14.js.map",
     "static/js/2.2ec475fb.chunk.js": "/BrewKit/static/js/2.2ec475fb.chunk.js",
     "static/js/2.2ec475fb.chunk.js.map": "/BrewKit/static/js/2.2ec475fb.chunk.js.map",
     "index.html": "/BrewKit/index.html",
-    "precache-manifest.f0298a19938a0cc00c6b99c510a1e281.js": "/BrewKit/precache-manifest.f0298a19938a0cc00c6b99c510a1e281.js",
+    "precache-manifest.fb8c48acbee094d51dcaa3e92110e818.js": "/BrewKit/precache-manifest.fb8c48acbee094d51dcaa3e92110e818.js",
     "service-worker.js": "/BrewKit/service-worker.js",
     "static/css/main.20ea30dc.chunk.css.map": "/BrewKit/static/css/main.20ea30dc.chunk.css.map"
   }
