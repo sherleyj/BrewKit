@@ -31,6 +31,7 @@ class Ibu extends React.Component {
     this.handleAddHopClick = this.handleAddHopClick.bind(this);
     this.handleHopChange = this.handleHopChange.bind(this);
     this.updateHop = this.updateHop.bind(this);
+    this.handleRemoveHopClick = this.handleRemoveHopClick.bind(this);
 
     }
 
@@ -196,6 +197,19 @@ class Ibu extends React.Component {
         event.preventDefault();
     }
 
+    handleRemoveHopClick(event, i) {
+        console.log("*** REMOVING HOP " + i + " ***");
+        event.preventDefault();
+        let hops = this.state.hops;
+        hops.splice(i, 1);
+        console.log(hops);
+        this.setState({
+            hops: hops,
+        });
+        
+    }
+
+
 
     render() {
         const hops = this.state.hops;
@@ -238,6 +252,12 @@ class Ibu extends React.Component {
                 <div className="inputLabel">ibus:</div>
                 <span>{this.state.hops[i].ibus}</span>
             </div>
+            <input 
+                type="submit" 
+                value="Remove Hop" 
+                className="submit-btn remove-hop-btn" 
+                onClick={(event) => this.handleRemoveHopClick(event, i)}
+            /> 
             </div>
             );
         });
