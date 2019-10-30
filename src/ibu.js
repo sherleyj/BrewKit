@@ -42,10 +42,14 @@ class Ibu extends React.Component {
         // const boil_gravity = this.state.boil_gravity;
         let utl = 0;
         // calculate and set state the boil_gravity
+        console.log("boilSizeGAL: ", Math.floor(this.state.boilSizeGAL) + " ,batchSizeGAL: ", Math.floor(this.state.batchSizeGAL) + " ,target_og: ", this.state.target_og + " ,boil_gravity: ", this.state.boil_gravity + " ,hops[0]: ", this.state.hops[0].aau);
         
-        this.setState({
-            boil_gravity: this.gravityAdjustByVolume(this.state.target_og, this.state.batchSizeGAL, this.state.boilSizeGAL),
-        });
+        // this.gravityAdjustByVolume(this.state.target_og, this.state.batchSizeGAL, this.state.boilSizeGAL);
+        // this.setState({
+        //     boil_gravity: boil_gravity,
+        // });
+
+        console.log("boil gravity: " + this.state.boil_gravity);
         const fG_starting = 1.65 * 0.000125**(this.state.boil_gravity - 1);
         const fG_target = 1.65 * 0.000125**(this.state.target_og - 1);
         const fG = (fG_target + fG_starting) / 2;
@@ -64,9 +68,10 @@ class Ibu extends React.Component {
         const tg_points = this.gravityPoints(target_gravity)
         const total_target_points = tg_points * target_vol
         const curr_gravity_points = Math.round(total_target_points / current_vol)
+        console.log("<<In GRavityAdjust>>. target_og: ", this.state.target_og);
 
         console.log("new boil gravity points: " + curr_gravity_points)
-        return (curr_gravity_points / 1000) + 1
+        return (curr_gravity_points / 1000) + 1;
     }
 
     gravityPoints(gravity) {
@@ -92,24 +97,33 @@ class Ibu extends React.Component {
     // https://medium.com/@bretdoucette/understanding-this-setstate-name-value-a5ef7b4ea2b4
     // TODO: Calculate and update boil_gravity
     handleIBUChange(event) {
-        // event.preventDefault();
         console.log("*************handleIBUChange*************");
         console.log("event target name: ", event.target.name);
         console.log("event target value: ", event.target.value);
-
+        let boil_gravity = 0;
+        if (event.target.name == 'batchSizeGAL') {
+            boil_gravity = this.gravityAdjustByVolume(this.state.target_og, event.target.value, this.state.boilSizeGAL);
+        } else if (event.target.name == 'boilSizeGal') {
+            boil_gravity = this.gravityAdjustByVolume(this.state.target_og, this.state.batchSizeGAL, event.target.value);
+        } else {
+            boil_gravity = this.gravityAdjustByVolume(event.target.value, this.state.batchSizeGAL, this.state.boilSizeGAL);
+        }
 
         this.setState({
             [event.target.name] : event.target.value,
+            boil_gravity : boil_gravity,
         }, this.updateAllHops);
 
+        // this.gravityAdjustByVolume(this.state.target_og, this.state.batchSizeGAL, this.state.boilSizeGAL);
         console.log("boilSizeGAL: ", Math.floor(this.state.boilSizeGAL) + " ,batchSizeGAL: ", Math.floor(this.state.batchSizeGAL) + " ,target_og: ", this.state.target_og + " ,boil_gravity: ", this.state.boil_gravity + " ,hops[0]: ", this.state.hops[0].aau);
     }
 
     updateHop(hop, i) {
         console.log("*** update hop ***");
-        console.log("i: " + i + ". hop.ounces: " + hop.ounces + ", hop.alphaAcid: " + hop.alphaAcid);
+        console.log("i: " + i + ". hop.ounces: " + hop.ounces + ", hop.alphaAcid: " + hop.alphaAcid
+        + ", target_og: " + this.state.target_og);
         console.log(typeof(this) == 'undefined');
-        if (hop.ounces && hop.alphaAcid && this.state.target_og) {
+        if (hop.ounces && hop.alphaAcid && this.state.target_og && this.state.boil_gravity) {
             hop.aau = Math.round(hop.ounces * hop.alphaAcid * 1000) / 1000;
             hop.utilization = this.calc_utilization(hop);  
             hop.ibus = Math.round((hop.utilization * hop.aau * 75 * 1000)/this.state.batchSizeGAL) / 1000;
@@ -139,6 +153,7 @@ class Ibu extends React.Component {
         this.setState({
             hops: hops,
         });
+        this.calcIbu();
     }
 
     handleHopChange(event, i) {
@@ -178,7 +193,7 @@ class Ibu extends React.Component {
         this.setState({
             hops : this.state.hops.concat(newHop),
         });
-        // event.preventDefault();
+        event.preventDefault();
     }
 
 
