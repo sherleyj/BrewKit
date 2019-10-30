@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/BrewKit/static/css/main.20ea30dc.chunk.css",
-    "main.js": "/BrewKit/static/js/main.3ce21bee.chunk.js",
-    "main.js.map": "/BrewKit/static/js/main.3ce21bee.chunk.js.map",
+    "main.js": "/BrewKit/static/js/main.2b90a4ca.chunk.js",
+    "main.js.map": "/BrewKit/static/js/main.2b90a4ca.chunk.js.map",
     "runtime~main.js": "/BrewKit/static/js/runtime~main.276a2c14.js",
     "runtime~main.js.map": "/BrewKit/static/js/runtime~main.276a2c14.js.map",
     "static/js/2.2ec475fb.chunk.js": "/BrewKit/static/js/2.2ec475fb.chunk.js",
     "static/js/2.2ec475fb.chunk.js.map": "/BrewKit/static/js/2.2ec475fb.chunk.js.map",
     "index.html": "/BrewKit/index.html",
-    "precache-manifest.65765c78c2c8fc17ee26edf14d52689c.js": "/BrewKit/precache-manifest.65765c78c2c8fc17ee26edf14d52689c.js",
+    "precache-manifest.8ef115e859e54fe50089c9572288bdb2.js": "/BrewKit/precache-manifest.8ef115e859e54fe50089c9572288bdb2.js",
     "service-worker.js": "/BrewKit/service-worker.js",
     "static/css/main.20ea30dc.chunk.css.map": "/BrewKit/static/css/main.20ea30dc.chunk.css.map"
   }
