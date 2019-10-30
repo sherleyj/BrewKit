@@ -208,3 +208,27 @@ input[type=submit]{
     height: 47px;
     margin-top: 0 !important;
 }
+
+@media  (max-width: 800px) {
+
+    .content-wrapper {
+        margin-top: 100px;
+    }
+    .flexItem {
+        flex-basis: 100%;
+        margin: 0;
+        margin-bottom: 10px;
+        box-shadow: 0 1px 8px 0 rgba(0,0,0,.1);
+
+    }
+
+    .flexContainer {
+        width: 100%;
+    }
+
+    .site-wrapper {
+        margin: 0 auto;
+    }
+
+
+}
