@@ -92,7 +92,7 @@ class Ibu extends React.Component {
     // https://medium.com/@bretdoucette/understanding-this-setstate-name-value-a5ef7b4ea2b4
     // TODO: Calculate and update boil_gravity
     handleIBUChange(event) {
-        event.preventDefault();
+        // event.preventDefault();
         console.log("*************handleIBUChange*************");
         console.log("event target name: ", event.target.name);
         console.log("event target value: ", event.target.value);
@@ -161,7 +161,7 @@ class Ibu extends React.Component {
         });
 
         console.log("i: " + i + ", ounces: " + this.state.hops[i].ounces + ", alphaAcid: " + this.state.hops[i].alphaAcid + ", aau: " + this.state.hops[i].aau + ", utilization: " + this.state.hops[i].utilization + ", target og: " + this.state.target_og);
-        event.preventDefault();
+        // event.preventDefault();
     }
 
     handleAddHopClick(event) {
@@ -178,7 +178,7 @@ class Ibu extends React.Component {
         this.setState({
             hops : this.state.hops.concat(newHop),
         });
-        event.preventDefault();
+        // event.preventDefault();
     }
 
 
@@ -260,7 +260,7 @@ class Ibu extends React.Component {
                     />
                 </div>
                 <div className="total-ibu red">
-                    <span>TOTAL IBU:  </span>
+                    <span>TOTAL IBUs:  </span>
                     {this.state.totalIbu}
                 </div>
                 <div className="red">
@@ -275,7 +275,7 @@ class Ibu extends React.Component {
                 <div className="hops-wrapper">
                     {hopsToRender}
                     <input type="submit" className="add-hop-btn" onClick={this.handleAddHopClick} value="Add Hop"/>
-                    <input type="submit" value="Submit" className="submit-btn"/> 
+                    <input type="submit" value="Update Total IBUs" className="submit-btn"/> 
                 </div>
                 
             </form>

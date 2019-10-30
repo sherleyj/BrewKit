@@ -26,7 +26,7 @@ class Gravity extends React.Component {
         this.setState({
             [event.target.name] : event.target.value,
         }, this.calcGravityAdjust);
-        event.preventDefault();
+        // event.preventDefault();
     }
 
     calcGravityAdjust() {

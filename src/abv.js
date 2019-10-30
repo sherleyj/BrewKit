@@ -21,7 +21,8 @@ class Abv extends React.Component {
             [event.target.name] : event.target.value,
         }, this.calculateAbv);
         console.log("After call to setState. og: ", this.state.og + ", fg :", this.state.fg + ", abv: ", this.state.abv + ", formula: ", this.state.formula);
-        event.preventDefault();
+        // commenting this out allowed for the change in radio button selection to be updated with just one click.
+        // event.preventDefault();
     }
 
 
