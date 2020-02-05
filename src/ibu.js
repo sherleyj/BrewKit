@@ -323,3 +323,6 @@ class Ibu extends React.Component {
 
 
 export default Ibu;
+
+// dissolvedCO2 = ((-0.9753) * Math.log(tempF) + 4.9648);
+// primeAmount = DesiredCO2Volume * BeerVolume - dissolvedCO2;

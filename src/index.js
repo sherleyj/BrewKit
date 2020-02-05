@@ -4,6 +4,7 @@ import './index.css';
 import Ibu from './ibu.js';
 import Abv from './abv.js';
 import Gravity from './gravity.js';
+import PrimingSugar from './priming-sugar.js';
 
 
 class Calc extends React.Component {
@@ -13,6 +14,7 @@ class Calc extends React.Component {
                 <Abv />
                 <Ibu />
                 <Gravity />
+                <PrimingSugar />
             </div>
         );
     }

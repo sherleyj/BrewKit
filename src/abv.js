@@ -12,7 +12,7 @@ class Abv extends React.Component {
     // binding necessary to make "this" work in the callback
     this.handleChange = this.handleChange.bind(this);
 
-}
+    }
 
     handleChange(event) {
         console.log("******* Handle IBU change ********");
